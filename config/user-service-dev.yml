@@ -1,29 +1,35 @@
-sp:
+sp:    #自定义JSON数据(假数据)
   user-service:
     users: "[{\"id\":7, \"username\":\"abc\",\"password\":\"123\"},{\"id\":8, \"username\":\"def\",\"password\":\"456\"},{\"id\":9, \"username\":\"ghi\",\"password\":\"789\"},{\"id\":99, \"username\":\"aaa\",\"password\":\"111\"}]"
-    
+
 spring:
-  application:
-    name: user-service
+  application:      #用户模块
+    name: user-service  #服务名称
   cloud:
     config:
-      override-none: true
-  rabbitmq:
-    host: 192.168.64.140
-    port: 5672
-    username: admin
-    password: admin
-
+      override-none: true  #设置禁止配置中心的配置将客户端配置覆盖掉
+  rabbitmq:   #连接消息中间件,来接收刷新指令
+   host: 192.168.64.140
+   port: 5672
+   username: admin
+   password: admin
+      
 server:
-  port: 8101
-  
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka  
+  port: 8101      #端口号
+ 
 
+
+#eureak服务(注册中心) 
+eureka:
+  client:       #客户端
+    service-url:     #服务地址
+        defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka    #这个地址只能有云服务商提供,除了在本机的就写在本机 
+        
+  #spring cloud 允许运行时动态刷新配置，可以重新从配置中心获取新的配置信息      
 management:
   endpoints:
     web:
-      exposure:
-        include: refresh
+      exposure:  #暴露 refresh 刷新端点
+        include: refresh 
+        
+                
